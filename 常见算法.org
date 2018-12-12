@@ -1,0 +1,23 @@
+#+TITLE: 常见算法的时间复杂度
+#+LATEX_CLASS_OPTIONS: [UTF8]
+#+LATEX_HEADER: \usepackage{ctex}
+#+LATEX_HEADER: \usepackage{fontspec}
+#+AUTHOR: 11603080122 周翔辉
+* 常见算法的时间复杂度
+** 常见算法
+| 问题或算法 | 描述 | 求解办法及时间复杂度描述 | 补记 |
+|------------+------+--------------------------+------|
+| 排序问题   | 对一个数组进行排序 |                          |      |
+|            |      |                          |      |
+|            |      |                          |      |
+|            |      |                          |      |
+|            |      |                          |      |
+|            |      |                          |      |
+|            |      |                          |      |
+
+#+BEGIN_SRC go
+func max(a, b int) int {
+    return a > b ? a : b
+}
+
+#+END_SRC
