@@ -52,12 +52,29 @@ func CalculateBinomialMemo(k, n int) int {
 // CalculateBinomialIteration is to calculate the binomial express parse n and k with iteration method
 // 计算二项式公式 使用迭代方法
 func CalculateBinomialIteration(k, n int) int {
-	for i := 1; i <= k; i++ {
-		for j := 1; j <= n; j++ {
-
+	// if n/2 < k {
+	//     k = n - k
+	// }
+	var kns [][]int
+	for i := 1; i <= n; i++ {
+		var s []int
+		for j := 1; j <= k; j++ {
+			if i < j {
+				s = append(s, 0)
+			} else if j == 1 {
+				s = append(s, i)
+			} else if i == j {
+				s = append(s, 1)
+			} else if i-j == 1 {
+				s = append(s, i)
+			} else {
+				s = append(s, kns[i-2][j-2]+kns[i-2][j-1])
+			}
 		}
+		kns = append(kns, s)
 	}
-	return 0
+
+	return kns[n-1][k-1]
 }
 
 // CalculateBinomialBrute to brute force to calculate binomial express k, n
