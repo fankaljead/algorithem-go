@@ -52,9 +52,6 @@ func CalculateBinomialMemo(k, n int) int {
 // CalculateBinomialIteration is to calculate the binomial express parse n and k with iteration method
 // 计算二项式公式 使用迭代方法
 func CalculateBinomialIteration(k, n int) int {
-	// if n/2 < k {
-	//     k = n - k
-	// }
 	var kns [][]int
 	for i := 1; i <= n; i++ {
 		var s []int
@@ -97,6 +94,9 @@ func GetKN() (k, n int) {
 	rand.Seed(time.Now().Unix())
 	k = rand.Intn(15) + 1
 	n = rand.Intn(20) + 1
+	if n/2 < k {
+		k = n - k
+	}
 	// k = rand.Int() % 10
 	// n = rand.Int() % 15
 	if k > n {

@@ -1,4 +1,78 @@
 \documentclass{ctexart}
+
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage[margin=1in,left=1.5in,includefoot]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{geometry}
+% \geometry{screen}
+\lstset{
+    numbers=left, 
+    numberstyle= \tiny, 
+    keywordstyle= \color{ blue!70  },
+    commentstyle= \color{red!50!green!50!blue!50}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20  },
+    escapeinside=`, % 英文分号中可写入中文
+    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+% Heading and Footer Stuff
+\usepackage{fancyhdr}
+\hypersetup{
+    colorlinks=true,
+    bookmarks=true,
+    %bookmarksopen=false,
+    % pdfpagemode=FullScreen,
+    % pdfstartview=Fit,
+    pdftitle={算法课程设计},
+    pdfauthor={周翔辉}
+}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+% For right foot page number
+\fancyfoot[R]{第{\thepage}页}
+\renewcommand{\headrulewidth}{0pt}
+% 页面下方的线
+\renewcommand{\footrulewidth}{0.5pt}
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
 \begin{document}
-Hello World
+
+\begin{titlepage}
+    \begin{center}
+        \line(1,0){300} \\
+        [0.25in]
+        \huge{\bfseries 算法课程设计} \\
+        [2mm]
+        \line(1,0){200} \\
+        [16cm]
+    \end{center}
+
+    \begin{flushright}
+        \textsc{\large 周翔辉\\
+            \# 11603080122 \\
+            2018年12月\\
+        }
+    \end{flushright}
+\end{titlepage}
+
+\pagenumbering{roman}
+\tableofcontents
+\cleardoublepage
+
+\newpage
+\pagenumbering{arabic}
+
+\setcounter{page}{1}
+\section{基本的递归算法}
+\subsection{二项式的计算}
+完成二项式公式计算,即 $C_n^k = C_{n-1}^{k-1} + C_{n-1}^k$ 公式解释为了从n个不同元素
+中抓取k个元素 ($C_n^k$),可以这样考虑,如果第一个元素一定在结果中,那么就需要从剩下的n-1个
+元素中抓取k-1个元素 ($C_{n-1}^{k-1}$);如果第一个元素不在结果中,就需要从剩下的n1个元素中抓取k个元素
+($C_{n-1}^k$)。要求分别采用以下方法计算,并进行三种方法所需时间的经验分析。
 \end{document}
