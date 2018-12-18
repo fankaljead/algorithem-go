@@ -46,10 +46,10 @@ func DrawBranchsTree() {
 	//     img.Set(dx-1, i, color.Black)
 	//
 	// }
-	drawline(500, 1000, 500, 700, func(x, y int) {
+	drawline(500, 1000, 500, 720, func(x, y int) {
 		img.Set(int(x), int(y), color.RGBA{255, 0, 0, 255})
 	})
-	ddraw(500, 700, 180, 300, img)
+	ddraw(500, 720, 180, 280, img)
 
 	imgcounter := 250
 	imgfile, _ := os.Create(fmt.Sprintf("%03d.png", imgcounter))
