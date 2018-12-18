@@ -91,16 +91,21 @@ func CalculateBinomialBrute(k, n int) int {
 // GetKN return k, n, k < n <20
 // 随机生成 k, v, k < n < 20
 func GetKN() (k, n int) {
-	rand.Seed(time.Now().Unix())
-	k = rand.Intn(15) + 1
-	n = rand.Intn(20) + 1
-	if n/2 < k {
-		k = n - k
-	}
-	// k = rand.Int() % 10
-	// n = rand.Int() % 15
-	if k > n {
-		k, n = n, k
+	for {
+		rand.Seed(time.Now().Unix())
+		k = rand.Intn(15) + 1
+		n = rand.Intn(20) + 1
+		if n/2 < k {
+			k = n - k
+		}
+		// k = rand.Int() % 10
+		// n = rand.Int() % 15
+		if k > n {
+			k, n = n, k
+		}
+		if n > 0 && k > 0 {
+			break
+		}
 	}
 
 	return
