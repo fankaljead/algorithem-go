@@ -18,22 +18,18 @@ import (
 	"image/png"
 	"log"
 	"math"
-	// "math/rand"
+	"math/rand"
 	"os"
-	// "time"
+	"time"
 )
 
 // DrawBranchsTree use go to draw a branchs trree
 // 使用 go  绘制一个简单的分行树
 func DrawBranchsTree() {
-	const (
-		dx float64 = 1000
-		dy float64 = 800
-	)
 	// 需要保存的文件
 
 	// 新建一个 指定大小的 RGBA位图
-	img := image.NewNRGBA(image.Rect(0, 0, 1000, 1000))
+	img := image.NewNRGBA(image.Rect(0, 0, 2000, 2000))
 
 	// drawline(5, 5, dx-8, dy-10, func(x, y int) {
 	//     img.Set(x, y, color.RGBA{uint8(x), uint8(y), 0, 200})
@@ -46,10 +42,12 @@ func DrawBranchsTree() {
 	//     img.Set(dx-1, i, color.Black)
 	//
 	// }
-	drawline(500, 1000, 500, 720, func(x, y int) {
-		img.Set(int(x), int(y), color.RGBA{255, 0, 0, 255})
-	})
-	ddraw(500, 720, 180, 280, img)
+	for i := -4; i < 4; i++ {
+		drawline(1000+i, 2000+i, 1000+i, 1700+i, func(x, y int) {
+			img.Set(int(x), int(y), color.RGBA{60, 0, 0, 255})
+		})
+	}
+	ddraw(1000, 1700, 180, 300, img)
 
 	imgcounter := 250
 	imgfile, _ := os.Create(fmt.Sprintf("%03d.png", imgcounter))
@@ -151,21 +149,26 @@ func ddraw(x, y, angle, length float64, img *image.NRGBA) {
 		return
 	}
 
-	var angleModifier float64 = 35
+	rand.Seed(time.Now().Unix())
+	var angleModifier float64 = float64(rand.Intn(20) + 40)
 	x2 := x + length*math.Cos(toRadians(angle+angleModifier))
 	y2 := y - length*math.Sin(toRadians(angle+angleModifier))
 	x3 := x + length*math.Cos(toRadians(angle-angleModifier))
 	y3 := y - length*math.Sin(toRadians(angle-angleModifier))
 	log.Println(x2, y2, x3, y3)
-	drawline(int(x), int(y), int(x2), int(y2), func(x, y int) {
-		img.Set(int(x), int(y), color.RGBA{255, 0, 0, 255})
-	})
-	drawline(int(x), int(y), int(x3), int(y3), func(x, y int) {
-		img.Set(int(x), int(y), color.RGBA{255, 0, 0, 255})
-	})
+	for i := -length / 100; i < length/100; i++ {
+		drawline(int(x+i), int(y+i), int(x2+i), int(y2+i), func(x, y int) {
+			img.Set(int(x), int(y), color.RGBA{uint8(255 - length/2), 0, 0, 255})
+		})
+		drawline(int(x+i), int(y+i), int(x3+i), int(y3+i), func(x, y int) {
+			img.Set(int(x), int(y), color.RGBA{uint8(255 - length/2), 0, 0, 255})
+		})
+	}
 
-	ddraw(x2, y2, angle+angleModifier, length*0.6, img)
-	ddraw(x3, y3, angle-angleModifier, length*0.6, img)
+	times1 := rand.Float64()*0.5 + 0.4
+	times2 := rand.Float64()*0.5 + 0.4
+	ddraw(x2, y2, angle+angleModifier, length*times1, img)
+	ddraw(x3, y3, angle-angleModifier, length*times2, img)
 }
 
 func toRadians(angle float64) float64 {
