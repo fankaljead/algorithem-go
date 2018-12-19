@@ -15,12 +15,57 @@ import (
 	"log"
 )
 
-// FindFourPints is to find 4 pints
-func FindFourPints() {
-	var bottles Bottles
+var (
+	bottles     Bottles
+	bottlesList []Bottles
+	root        Node
+	last        Node
+)
+
+func init() {
 	bottles = append(bottles, Bottle{8, 8})
 	bottles = append(bottles, Bottle{5, 0})
 	bottles = append(bottles, Bottle{3, 0})
+	bottlesList = append(bottlesList, bottles)
+
+}
+
+// FindFourPints is to find 4 pints
+func FindFourPints() {
+
+	tempBottles := bottles.Copy()
+	root.Bottles = bottles
+	current := root
+	last = root
+
+	for _, v := range current.Son {
+		temp := v.Bottles.Copy()
+		for _, v1 := range temp {
+			for _, v2 := range temp {
+				if v1 != v2 {
+					v1.PourInto(&v2)
+				}
+			}
+		}
+	}
+
+	for {
+		tempBottles = tempBottles.Copy()
+
+		for _, v1 := range tempBottles {
+			for _, v2 := range tempBottles {
+				if v1 != v2 {
+					v1.PourInto(&v2)
+				}
+			}
+		}
+
+		bottlesList = append(bottlesList, tempBottles)
+
+		if tempBottles.Has(4) {
+			break
+		}
+	}
 
 	log.Println(bottles)
 }
@@ -42,4 +87,42 @@ func (bs Bottles) Has(u int) bool {
 	}
 
 	return false
+}
+
+// PourInto cap water to another bottle
+func (bs *Bottle) PourInto(abs *Bottle) bool {
+	cap := abs.Capacity - abs.Used
+
+	if cap == 0 {
+		return false
+	}
+
+	if bs.Used <= 0 {
+		return false
+	}
+
+	bs.Used -= cap
+	abs.Used += cap
+	return true
+
+}
+
+// Copy can copy bottles return a new bottles
+func (bs Bottles) Copy() (nbs Bottles) {
+	for _, v := range bs {
+		nbs = append(nbs, Bottle{Capacity: v.Capacity, Used: v.Used})
+	}
+	return
+}
+
+// Node store a node for Bottles Tree
+type Node struct {
+	Bottles Bottles
+	Parent  *Node
+	Son     []Node
+}
+
+// BottlesTree store
+type BottlesTree struct {
+	Root *Node
 }
