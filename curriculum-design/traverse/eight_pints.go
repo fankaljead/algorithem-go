@@ -33,41 +33,68 @@ func init() {
 // FindFourPints is to find 4 pints
 func FindFourPints() {
 
-	tempBottles := bottles.Copy()
 	root.Bottles = bottles
 	current := root
-	last = root
 
-	for _, v := range current.Son {
-		temp := v.Bottles.Copy()
-		for _, v1 := range temp {
-			for _, v2 := range temp {
-				if v1 != v2 {
-					v1.PourInto(&v2)
-				}
-			}
-		}
-	}
+	preBottleListSize := len(bottlesList)
+	var sons [][]Node
+	sons = append(sons, append(current.Son, current))
 
 	for {
-		tempBottles = tempBottles.Copy()
+		for _, v1 := range current.Bottles {
+			for _, v2 := range current.Bottles {
+				if !v1.Equal(v2) {
+					tempV1 := v1.Copy()
+					tempV2 := v2.Copy()
+					if tempV1.PourInto(&tempV2) {
+						log.Println(tempV1.Capacity, " pour into ", tempV2.Capacity)
+						var bottlesNode Bottles
+						bottlesNode = append(bottlesNode, tempV1)
+						bottlesNode = append(bottlesNode, tempV2)
 
-		for _, v1 := range tempBottles {
-			for _, v2 := range tempBottles {
-				if v1 != v2 {
-					v1.PourInto(&v2)
+						// 创建新的Bottles
+						// Create new Bottles after pouring
+						for _, v3 := range current.Bottles {
+							if !v3.Equal(tempV1) && !v3.Equal(tempV2) {
+								tempV3 := v3.Copy()
+								bottlesNode = append(bottlesNode, tempV3)
+							}
+						}
+						if bottlesNode.Has(4) {
+							return
+						}
+
+						// 判断节点是否存在
+						// judge the new bottles is existed or not after pouring
+						flag := true
+						for _, alreadyExist := range bottlesList {
+							if alreadyExist.Equal(bottlesNode) {
+								flag = false
+								break
+							}
+						}
+						// 没有满足结束条件，但未出现过，将其加入 current 的子节点中
+						if flag {
+							var tempNode Node
+							tempNode.Bottles = bottlesNode
+							tempNode.Parent = &current
+							current.Son = append(current.Son, tempNode)
+							bottlesList = append(bottlesList, bottlesNode)
+
+						}
+
+					}
 				}
 			}
 		}
 
-		bottlesList = append(bottlesList, tempBottles)
-
-		if tempBottles.Has(4) {
-			break
+		// 判断终止，当长度不在变换，说明已经遍历出所以情况
+		if preBottleListSize == len(bottlesList) {
+			log.Println("no answer")
+			return
 		}
 	}
 
-	log.Println(bottles)
 }
 
 // Bottles can store some bottles
@@ -90,21 +117,44 @@ func (bs Bottles) Has(u int) bool {
 }
 
 // PourInto cap water to another bottle
-func (bs *Bottle) PourInto(abs *Bottle) bool {
-	cap := abs.Capacity - abs.Used
+func (b *Bottle) PourInto(ab *Bottle) bool {
+	cap := ab.Capacity - ab.Used
 
 	if cap == 0 {
 		return false
 	}
 
-	if bs.Used <= 0 {
+	if b.Used <= 0 {
 		return false
 	}
 
-	bs.Used -= cap
-	abs.Used += cap
+	b.Used -= cap
+	ab.Used += cap
 	return true
 
+}
+
+// Equal judge two bottle is equal or not
+func (b Bottle) Equal(ab Bottle) bool {
+	if b.Capacity == ab.Capacity && b.Used == ab.Used {
+		return true
+	}
+	return false
+}
+
+// Equal judge two bottle is equal or not
+func (bs Bottles) Equal(abs Bottles) bool {
+	for _, v1 := range bs {
+		for _, v2 := range abs {
+			if v1.Equal(v2) {
+				continue
+			} else {
+				return false
+			}
+		}
+	}
+
+	return true
 }
 
 // Copy can copy bottles return a new bottles
@@ -112,6 +162,14 @@ func (bs Bottles) Copy() (nbs Bottles) {
 	for _, v := range bs {
 		nbs = append(nbs, Bottle{Capacity: v.Capacity, Used: v.Used})
 	}
+	return
+}
+
+// Copy can copy bottle return a new bottle
+func (b *Bottle) Copy() (nb Bottle) {
+	nb.Capacity = b.Capacity
+	nb.Used = b.Used
+
 	return
 }
 
