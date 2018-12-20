@@ -17,5 +17,5 @@ import (
 
 // TestFindFourPints is to test FindFourPints problem
 func TestFindFourPints(t *testing.T) {
-	FindFourPints()
+	PourDo()
 }

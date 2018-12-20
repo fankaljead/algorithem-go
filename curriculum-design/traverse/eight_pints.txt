@@ -1,0 +1,22 @@
+find(nodes)
+
+if len(nodes)==0 
+	return nil
+
+cloneNode = clone(nodes)
+newNodes = []
+for node in cloneNode do	
+	
+	for bottle1 in node
+		for bottle2 in node
+			if bottle1 != bottle2 do
+				// 先克隆，后倒水				
+				newNode=pour(bottle1,bottle2,node)
+				if newNode isnot in nodeLists do
+					append(nodeLists, newNode)
+					append(newNodes, newNode)
+					newNode.parent = node
+				if Has(newNode, number) do
+					return newNode
+					
+find(newNodes)
