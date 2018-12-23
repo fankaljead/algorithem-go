@@ -12,13 +12,13 @@
 package dynamic
 
 import (
-	"log"
+// "log"
 )
 
 // FindMaxValue 找到给定积分所能够获得的最大价值
 // prices 商品价格列表, credits 商品所需积分列表, exchangeRates 商品积分价格兑换比率, totalCredit 总积分
 // 返回商品最大价值时选中的商品列表下标
-func FindMaxValue(prices, credits, exchangeRates []float64, totalCredit float64) (float64, *[]int) {
+func FindMaxValue(prices, credits []float64, totalCredit float64) (float64, *[]int) {
 	maxValue := float64(0)
 
 	f := new([][]float64)
@@ -30,18 +30,12 @@ func FindMaxValue(prices, credits, exchangeRates []float64, totalCredit float64)
 		}
 		*f = append(*f, *tf)
 	}
-	log.Println("f:", f)
-	log.Println("f length:", len(*f))
-	log.Println("f0 length:", len((*f)[0]))
-	// weights := new([]int)
-	// values := new([]int)
+
 	result := new([]int)
 
 	// tracebackMemo(len(prices), int(totalCredit), weights, values, f)
 	tracebackMemo(len(prices), int(totalCredit), &credits, &prices, f, result)
-	log.Println(prices)
 
-	log.Println("f:", f)
 	for _, v := range *result {
 		maxValue += prices[v]
 	}
@@ -53,7 +47,7 @@ func knapsackMemo(i, j int, weights, values *[]float64, f *[][]float64) float64 
 	if i == 0 || j == 0 {
 		return 0
 	}
-	if (*f)[i][j] == 0 {
+	if (*f)[i][j] < 0 {
 		v := float64(0)
 		if float64(j) < (*weights)[i-1] {
 			v = knapsackMemo(i-1, j, weights, values, f)
@@ -71,11 +65,9 @@ func tracebackMemo(i, j int, weights, values *[]float64, f *[][]float64, result 
 		return
 	}
 	if float64(j) >= (*weights)[i-1] {
-		log.Println("(j-int((*weights)[i-1]) = ", (j - int((*weights)[i-1])))
 		if knapsackMemo(i, j, weights, values, f) ==
 			(*values)[i-1]+knapsackMemo(i-1, j-int((*weights)[i-1]), weights, values, f) {
 			*result = append(*result, i-1)
-			log.Println("i-1=", i-1)
 			tracebackMemo(i-1, j-int((*weights)[i-1]), weights, values, f, result)
 		} else {
 			tracebackMemo(i-1, j, weights, values, f, result)

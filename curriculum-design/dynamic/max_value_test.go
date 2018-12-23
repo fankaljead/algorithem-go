@@ -18,12 +18,14 @@ import (
 
 // TestFindMaxValue test FindMaxValue
 func TestFindMaxValue(t *testing.T) {
-	prices := [...]float64{200, 400, 500, 250, 500, 60, 300}         // 商品价格列表
-	credits := [...]float64{2000, 1000, 2500, 500, 3000, 1000, 2000} // 商品所需积分列表
-	exchangeRates := [...]float64{3, 0.4, 0.2, 250, 500, 6000, 2000}
-	totalCredit := float64(10000) // 总积分
+	prices := [...]float64{200, 400, 500, 250, 500, 60, 300, 200}          // 商品价格列表
+	credits := [...]float64{5000, 1000, 2500, 500, 3000, 1000, 2000, 1200} // 商品所需积分列表
+	totalCredit := float64(10000)                                          // 总积分
 
-	maxValue, result := FindMaxValue(prices[:], credits[:], exchangeRates[:], totalCredit)
-	log.Println("最大价值列表: ", result)
+	maxValue, result := FindMaxValue(prices[:], credits[:], totalCredit)
+	log.Println("总积分为:", totalCredit)
+	log.Println("商品价格列表为: ", prices)
+	log.Println("商品所需积分为: ", credits)
+	log.Println("最大价值列表: ", *result)
 	log.Println("最大价值为: ", maxValue)
 }
