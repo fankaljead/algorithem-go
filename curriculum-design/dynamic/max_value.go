@@ -15,7 +15,7 @@ import (
 	"log"
 )
 
-// FindMaxValue 找到给定积分所能够获得的最大价值
+// FindMaxValue1 找到给定积分所能够获得的最大价值
 // prices 商品价格列表, credits 商品所需积分列表, exchangeRates 商品积分价格兑换比率, totalCredit 总积分
 // 返回商品最大价值时选中的商品列表下标
 // 每种商品可以选择多次
