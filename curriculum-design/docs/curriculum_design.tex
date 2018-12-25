@@ -11,20 +11,46 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{float}
-
+\lstset{
+    basicstyle=\footnotesize,
+    %行号
+    numbers=left,
+	 breaklines=true,   
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    escapeinside=``,
+    xleftmargin=2em,
+	 xrightmargin=2em, 
+	 %aboveskip=1em,
+    %背景框
+    %framexleftmargin=1.5mm,
+    frame=shadowbox,
+	 %breakatwhitespace=false,
+	 flexiblecolumns=true,
+    %背景色
+    backgroundcolor=\color[RGB]{245,245,245},
+    %样式
+    keywordstyle=\color{blue}\bfseries,
+    identifierstyle=\bf,
+    numberstyle=\color[RGB]{0,192,192},
+    commentstyle=\it\color[RGB]{96,96,96},
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+    %显示空格
+    showstringspaces=false,
+	 escapechar=`
+ }
 
 % \geometry{screen}
-\lstset{
-    numbers=left, 
-    numberstyle= \tiny, 
-    keywordstyle= \color{ blue!70  },
-    commentstyle= \color{red!50!green!50!blue!50}, 
-    frame=shadowbox, % 阴影效果
-    rulesepcolor= \color{ red!20!green!20!blue!20  },
-    escapeinside=`, % 英文分号中可写入中文
-    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
-    framexleftmargin=2em
-} 
+%\lstset{
+    %numbers=left, 
+    %numberstyle= \tiny, 
+    %keywordstyle= \color{ blue!70  },
+    %commentstyle= \color{red!50!green!50!blue!50}, 
+    %frame=shadowbox, % 阴影效果
+    %rulesepcolor= \color{ red!20!green!20!blue!20  },
+    %escapeinside=`, % 英文分号中可写入中文
+    %xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    %framexleftmargin=2em
+%} 
 % Heading and Footer Stuff
 \usepackage{fancyhdr}
 \hypersetup{
@@ -239,10 +265,51 @@
 壶,如何通过完全灌满或者到空这些壶从而使得某个壶精确地装有4品脱的水?用广度优先查找来求解
 这个谜题。要求在输出结果中包含广度优先的遍历过程(结点的遍历顺序)。
 \subsubsection{解决问题所用的算法设计方法及基本思想}
+采用广度有序一层一层遍历的思想，考虑某一层中的某个节点（这棵树中每个节点都保存着当前每个瓶子的信息，包括
+容量和已经使用了多少），这几个瓶子可以互相倒水，只有能够倒成功的才能进行下一步，并且倒水后的节点不能已经
+存在，这样一层一层的倒水，当某个节点满足添加时即可退出，并倒序回去得到倒水过程。
 \subsubsection{采用的数据结构描述}
+使用了一个栈来保存树的节点，一个数组来保存已经产生的结果（用来判断这个节点是否已经产生过了），一个结构体
+来保存瓶子的容量和用量。
 \subsubsection{算法描述 }
+   {\bfseries 找到一个倒水过程使其符合给定的结果} \\
+   \tab{\bfseries{算法 find $(nodes)$ }} \\
+	\tab// 找到一个倒水过程使其符合给定的结果\\
+	\tab// 输入：一个或多个起始状态节点数组 nodes \\
+	\tab// 输出：到给定结果的倒水过程\\
+	\tab{\bfseries if} $len(nodes) \leftarrow 0$ \\
+	\tab\tab{\bfseries return} null \\
+	\tab cloneNode $\leftarrow$ clone(nodes) // 复制当前所有节点信息 \\
+	\tab newNodes $\leftarrow$ array // 创建一个新的数组保存生成的所有节点 \\
+	\tab{\bfseries for} node in cloneNode {\bfseries do} // 遍历这层的所有节点 \\
+	\tab\tab{\bfseries for} bottle1 in node // 每个节点的瓶子互相倒水 \\
+	\tab\tab{\bfseries for} bottle2 in node // 每个节点的瓶子互相倒水 \\
+	\tab\tab\tab{\bfseries if} $bottle1 \ne bottle2$ {\bfseries do} // 瓶子不同才倒水\\
+	\tab\tab\tab// 先克隆，后倒水				\\
+	\tab\tab\tab newNode=pour(bottle1,bottle2,node) \\
+	\tab\tab\tab{\bfseries if} newNode isnot in nodeLists {\bfseries do} \\
+	\tab\tab\tab\tab nodeList.add(newnode) // 全局保存的所有节点\\
+	\tab\tab\tab\tab newNodes.add(newnode) \\
+	\tab\tab\tab\tab newNode.parent = node // 使当前节点的父节点志向node\\
+	\tab\tab\tab{\bfseries if} Has(newNode, number) // 判断当前节点是否满足退出条件 \\
+	\tab\tab\tab\tab{\bfseries return} newNode \\
+	\tab find(newNodes)
 \subsubsection{算法的时间空间复杂度分析 }
 \subsubsection{算法实例}
+
+输入：
+\begin{lstlisting}[language=C]
+// 瓶子数组 容量、用量
+[{122,99}, {50,25}, {12,1}, {2,0}, {5,4}] 
+40 // 需要的结果
+\end{lstlisting}
+
+输出：
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{../images/eight_pints_result_demo.png}
+	\caption{品脱倒水问题结果}
+\end{figure}
 
 \newpage
 \subsection{24点问题}
@@ -250,20 +317,54 @@
 用户输入4位个位数(1~9),四个数之间只能通过+,-,*,/运算进行连接,请输出四则运算表达式,其
 求值结果为24。然后输出所有求值结果为24的组合。你能不能不通过四重循环来产生这4个参与运算
 的数。
-提示:
-
+\subsubsection{解决问题所用的算法设计方法及基本思想}
+可以使用如下的不在求解：
 \begin{enumerate}
 	\item 产生4个数的排列;
 	\item 产生运算符的排列(4种运算符,任选3个);
 	\item 考虑加括号方式,纸上推演一下,有5种加括号方式,如果对4个数的排列没有约束,加括号方式
 也可以简化为三种< $(a+b)+(c+d), ((a+b)+c)+d, (a+(b+c))+d>。a+((b+c)+d),a+(b+(c+d))$ 是被去掉的两种,这里加号表示运算符。
 \end{enumerate}
-\subsubsection{解决问题所用的算法设计方法及基本思想}
-\subsubsection{采用的数据结构描述}
-\subsubsection{算法描述 }
-\subsubsection{算法的时间空间复杂度分析 }
-\subsubsection{算法实例}
 
+然后循环数的排列、运算符的排列和三个加括号的方式，一一计算，即可以求出哪些可以满足24点。
+\subsubsection{采用的数据结构描述}
+使用数组来保存生成的数的排列和运算符的排列，使用字符串数组来保存满足24点的表达式。
+\subsubsection{算法描述 }
+   {\bfseries 计算24点} \\
+	\tab{\bfseries{算法 CalculatePoints$($a, b, c, d$)$ }} \\
+	\tab// 计算24点 \\
+	\tab// 输入：$a,b,c,d$ 四个个位数 \\
+	\tab// 输出：所有满足24点的表达式 \\
+	\tab resultList $\leftarrow$ array // 保存符号24点的表达式数组 \\
+	\tab expressionList $\leftarrow $getPerms($a,b,c,d$) // 获取 $a,b,c,d$ 构成的排列 \\
+	\tab operatorList $\leftarrow$ getOperator("+","-","*","/") // 获取 $+,-,*,/$ 构成的排列 \\
+	\tab{\bfseries for} $i \leftarrow 0$ to len(expressionList) {\bfseries do}\\
+	\tab\tab{\bfseries for} $j \leftarrow 0$ to len(expressionList) {\bfseries do}\\
+	\tab\tab\tab if calculate(expressionList[i], operatorList[j]) $= 24$ //$(a+b) + (c+d)$ \\
+	\tab\tab\tab resultList.add(expressionList[i]) \\
+	\tab\tab\tab if calculate(expressionList[i], operatorList[j]) $= 24$ // $((a+b)+c)+d$ \\
+	\tab\tab\tab resultList.add(expressionList[i]) \\
+	\tab\tab\tab if calculate(expressionList[i], operatorList[j]) $= 24$ //$(a +(b+c)) + d$ \\
+	\tab\tab\tab resultList.add(expressionList[i]) \\
+	\tab{\bfseries return} resultList
+\subsubsection{算法的时间空间复杂度分析 }
+输入有4个数字，可以产生64种组合，4和运算符可以参数64种组合，还有3种情况，所以当输入梳子个数为 $n$ 时，则有 $n! * C_n^{n-1}*(n-1)! * c = cn!^2$, 
+所以时间复杂度 $\Theta(n) = cn!^2$， 空间复杂度为 $cn!^2+k$ 。
+\subsubsection{算法实例}
+输入:
+\begin{lstlisting}[language=C]
+4,5,6,7 24
+\end{lstlisting}
+
+输出:
+\begin{lstlisting}[language=C]
+(4+(4/5))*6 (4-(4/5))*6 (4+(4/7))*6 (4-(4/7))*6 (6+6)*(7-5) 
+(6*6)-(7+5) (6*6)-(5+7) (6/(6-5))*4 ((6/6)+5)*4 (6+(6/7))*4 
+(6-(6/7))*4 (7-(7/5))*4 ((7/7)+5)*4 (7-7)+(4*6) ((7-7)+4)*6 
+(7-7)+(6*4) ((7-7)+6)*4 (7-(7/6))*4 (7*7)/(6-4) (5*5)-(7/4) 
+(5-5)+(6*4) ((5-5)+6)*4 (5*5)-(6/4) (5-5)+(4*6) ((5-5)+4)*6 
+(5-(5/4))*6 ((5*5)-7)+6 (5*5)-(7/6) (5*5)+(6-7) ((5*5)+6)-7
+\end{lstlisting}
 
 \newpage
 \section{动态规划}
@@ -272,10 +373,39 @@
 如果一个子序列从左向右和从右向左读都一样,则称之为回文。例如,序列 $ACGTGTCAAAATCG$ 有
 很多回文子序列,比如 $ACGCA$ 和 $AAAA$ 。请给出一个算法,求出最长的回文子序列。
 \subsubsection{解决问题所用的算法设计方法及基本思想}
+将字符串中的每一个字符最开始时都当成一个回文子序列，然后遍历整个字符串，再遍历回文子序列的
+数组，找到从字符 i 到这个字符的最大回文子序列，最后提取出最大的子序列。
 \subsubsection{采用的数据结构描述}
+使用一个 map 来保存子序列数组的下标， key 为 start，value 为 end。
 \subsubsection{算法描述 }
+   {\bfseries 找出最长的回文子序列} \\
+	\tab{\bfseries{算法 find$(chars)$ }} \\
+	\tab// 找出最长的回文子序列 \\
+	\tab// 输入：$chars$ 需要寻找最长回文子序列的字符串\\
+	\tab// 输出：$chars$ 中最长的回文子序列\\
+	\tab result $\leftarrow$ array // 保存最长回文子序列的数组\\
+	\tab resultMap $\leftarrow$ map // 保存最长回文子序列的start和end \\
+	\tab // 初始化 最长回文子序列为字符串第一个元素 \\
+	\tab{\bfseries for} $i \leftarrow 0$ to len(chars) {\bfseries do} \\
+	\tab\tab resultMap[i] $\leftarrow $ = $i$ \\
+	\tab{\bfseries for} $index \leftarrow 1$ to len(chars) {\bfseries do} \\
+	\tab\tab{\bfseries for} $k,v $ range resultMap \\
+	\tab\tab find($k,v,char,resultMap,index$) \\
+	\tab// 找到resultMap中最长的元素value-key\\
+	\tab longestLength $\leftarrow$ findLongestLength(resultMap) \\
+	\tab// 找到chars中的最长回文子序列，长度为longestLength\\
+	\tab result $\leftarrow$ findLongestSubString(longestLength,resultMap,chars) \\
+	\tab{\bfseries return} result
 \subsubsection{算法的时间空间复杂度分析 }
+首先需要一个外层字符串的遍历，然后是寻找最长的回文子序列，其时间辅助度为
+$\Theta(n) = n^3$，空间复杂度为 $n^2$。
 \subsubsection{算法实例}
+下面是实验测试过程中的一些输入输出:
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{../images/max_huiwen.png}
+	\caption{最长回文子序列}
+\end{figure}
 
 
 \newpage
@@ -290,10 +420,37 @@
 列了出来,同时罗列了所有商品的积分。此时小美又应该怎么挑选,使得获得的价值最大?(或许你
 应该想想价值是什么?)
 \subsubsection{解决问题所用的算法设计方法及基本思想}
+此问题跟背包问题非常类似，都是价值最大化的问题，在一定的积分（重量）下，选择合适的商品（具有一定的积分和价值（重量和价值））
+，使用一层一层的填表，即 $$F(i,j) = \Bigm\lbrace ^{F(i,j) = max{F(i-1,j), v_i + F(i-1,j-w_j), j-w_j \ge 0}} _{F(i-1,j), \tab j - w_j < 0}$$
 \subsubsection{采用的数据结构描述}
+使用一个二维数组保存填表的信息（$F(i,j)$） 的值。
 \subsubsection{算法描述 }
+   {\bfseries 最大价值化问题} \\
+   \tab{\bfseries{算法 FindMaxValue1(i,j,prices, credits, totalCredit) }} \\
+	\tab// 找出价值最大的商品集合 \\
+	\tab// 输入：prices 每个商品的价格\\
+	\tab// 输入：credits 每个商品的积分\\
+	\tab// 输入：totalCredit 一共拥有的积分\\
+	\tab// 输出：最大价值商品的集合\\
+	\tab// 注意：F数组除了行0和列0用0初始化外，其它全部用-1初始化\\
+	\tab{\bfseries if} $F(i,j) < 0$  {\bfseries do} \\
+	\tab\tab{\bfseries if} $j < credits[i]$ {\bfseries do} \\
+	\tab\tab\tab $value \leftarrow FindMaxValue(i-1,j,prices,credits,totalCredit)$ \\
+	\tab\tab{\bfseries else do} \\
+	\tab\tab\tab $value \leftarrow max(FindMaxValue1(i-1,j)), \\
+	prices[i] + FindMaxValue(i-1,j-credits[j-prices[i]])$\\
+	\tab\tab $F[i,i] \leftarrow value$\\
+	\tab{\bfseries return} $F[i,j] $
 \subsubsection{算法的时间空间复杂度分析 }
+此算法基于填表的查询相加，时间复杂度为 $\Theta(n) = (n+1)^2$，空间复杂度也为 $(n+1)^2$。
 \subsubsection{算法实例}
+下面是实验测试时的一些输入输出：
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{../images/xiaomei_max_value.png}
+	\caption{最大价值问题实验输入输出}
+\end{figure}
+
 
 \newpage
 \section{分支限界与回溯}

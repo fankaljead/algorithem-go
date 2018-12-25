@@ -18,7 +18,7 @@ import (
 
 // TestCalculatePoints test CalculatePoints
 func TestCalculatePoints(t *testing.T) {
-	CalculatePoints(1, 2, 3, 5, 24)
+	log.Println("4,6,7,5 -> 24")
+	CalculatePoints(4, 6, 7, 5, 24)
 
-	log.Println(Calculate("5/3+3"))
 }
