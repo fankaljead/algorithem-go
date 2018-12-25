@@ -192,16 +192,52 @@
 \newpage
 \subsection{绘制简单的分形树}
 \subsubsection{问题描述}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/demo-tree.png}
+	\caption{分形树示例}
+\end{figure}
+
+先垂直绘制一根线段,然后在线段顶端向右一定倾角绘制一根线段,长度分别为原线段的k倍. 再同样
+的,在线段左侧以固定倾角绘制一根线段,如此反复,直至线段长度小于某个较小的值。其中,线条
+颜色以及长度,夹角(例如产生某个范围的随机数)都可以自行进行微调。
+
 \subsubsection{解决问题所用的算法设计方法及基本思想}
+使用递归的思想，假定现在正在一个节点，那么随机生成两个角度和长度，调用画图的方法画出两个子节点，
+然后再递归的画出这两个子节点的图。
 \subsubsection{采用的数据结构描述}
+无。
 \subsubsection{算法描述 }
+   {\bfseries 绘制简单的分形树算法} \\
+	\tab{\bfseries{算法 ddraw $(x, y, length, angle)$ }} \\
+	\tab// 绘制简单的分形树 递归算法 \\
+	\tab// 输入：节点的$x, y$ 表示坐标, $length$ 表示长度, $angle$ 表示偏的角度 \\
+	\tab// 输出：绘制出的分形树的图像 \\
+	\tab{\bfseries if} $length < minilength $// 最短的边长度，退出条件 \\
+	\tab\tab{\bfseries return} \\
+	\tab $x_2,y_2,x_3,y_3 = $ getRandomSon(x,y) // 获取子节点的坐标 \\
+	\tab draw($x,y,length,angle$)// 画出当前节点 \\
+	\tab ddraw($x_2,y_2,randomLength_2,randomAngle_2$) // 画左边子节点 \\
+	\tab ddraw($x_3,y_3,randomLength_3,randomAngle_3$) // 画右边子节点 \\
+
 \subsubsection{算法的时间空间复杂度分析 }
+假定树的深度为 $n$ ，那么此算法的时间复杂度为 $\Theta(n) = 2^n$，空间辅助度也为 $2^n$ 。 
 \subsubsection{算法实例}
+下面是一个随机生成的分形树的实例：
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.15]{../images/trree.png}
+	\caption{生成的分形树的实例}
+\end{figure}
 
 \newpage
 \section{遍历}
 \subsection{8品脱问题}
 \subsubsection{问题描述}
+西蒙.丹尼斯.泊松是著名的法国数学家和物理学家。据说在他遇到某个古老的谜题之后,就开始对数学
+感兴趣了,这个谜题是这样的:给定一个装满水的8品脱壶以及两个容量分别为5品脱和3品脱的空
+壶,如何通过完全灌满或者到空这些壶从而使得某个壶精确地装有4品脱的水?用广度优先查找来求解
+这个谜题。要求在输出结果中包含广度优先的遍历过程(结点的遍历顺序)。
 \subsubsection{解决问题所用的算法设计方法及基本思想}
 \subsubsection{采用的数据结构描述}
 \subsubsection{算法描述 }
@@ -211,6 +247,17 @@
 \newpage
 \subsection{24点问题}
 \subsubsection{问题描述}
+用户输入4位个位数(1~9),四个数之间只能通过+,-,*,/运算进行连接,请输出四则运算表达式,其
+求值结果为24。然后输出所有求值结果为24的组合。你能不能不通过四重循环来产生这4个参与运算
+的数。
+提示:
+
+\begin{enumerate}
+	\item 产生4个数的排列;
+	\item 产生运算符的排列(4种运算符,任选3个);
+	\item 考虑加括号方式,纸上推演一下,有5种加括号方式,如果对4个数的排列没有约束,加括号方式
+也可以简化为三种< $(a+b)+(c+d), ((a+b)+c)+d, (a+(b+c))+d>。a+((b+c)+d),a+(b+(c+d))$ 是被去掉的两种,这里加号表示运算符。
+\end{enumerate}
 \subsubsection{解决问题所用的算法设计方法及基本思想}
 \subsubsection{采用的数据结构描述}
 \subsubsection{算法描述 }
@@ -222,6 +269,8 @@
 \section{动态规划}
 \subsection{最长回文子序列问题}
 \subsubsection{问题描述}
+如果一个子序列从左向右和从右向左读都一样,则称之为回文。例如,序列 $ACGTGTCAAAATCG$ 有
+很多回文子序列,比如 $ACGCA$ 和 $AAAA$ 。请给出一个算法,求出最长的回文子序列。
 \subsubsection{解决问题所用的算法设计方法及基本思想}
 \subsubsection{采用的数据结构描述}
 \subsubsection{算法描述 }
@@ -232,6 +281,14 @@
 \newpage
 \subsection{小美购物问题}
 \subsubsection{问题描述}
+小美近来疯狂购物,信用卡上获得积分100000。在积分商城中有许多物品可以选兑。例如食用油,大
+米,钢笔,电烤炉,研磨机,热水壶等等。信用卡积分就快过期了,小美想将这一万积分尽量用光,
+请问小美应该怎么办?
+
+小美在挑选物品的过程中,发现有些积分和实际价格的比例大概是100:1,继而发现有些商品在积分商
+城里购买并不划算,不如去京东购买。小美为了这100000积分也是拼了,将所有商品在京东的价格罗
+列了出来,同时罗列了所有商品的积分。此时小美又应该怎么挑选,使得获得的价值最大?(或许你
+应该想想价值是什么?)
 \subsubsection{解决问题所用的算法设计方法及基本思想}
 \subsubsection{采用的数据结构描述}
 \subsubsection{算法描述 }
@@ -242,6 +299,19 @@
 \section{分支限界与回溯}
 \subsection{n个处理机和k个任务问题}
 \subsubsection{问题描述}
+假设有n个任务由k个可并行工作的机器完成。完成任务i需要的时间为 。试设计一个算法找出完成这
+n个任务的最佳调度,使得完成全部任务的时间最早。
+例如,输入为
+\begin{lstlisting}[language=C]
+7 3
+2 2 14 4 16 6 5 3
+\end{lstlisting}
+表示有7个任务,有3台可并行工作的机器。每个任务需要的完成时间在第二行。
+输出文件示例
+\begin{lstlisting}[language=C]
+1
+17
+\end{lstlisting}
 \subsubsection{解决问题所用的算法设计方法及基本思想}
 \subsubsection{采用的数据结构描述}
 \subsubsection{算法描述 }
@@ -252,6 +322,15 @@
 \section{附加题目}
 \subsection{学习超市选址问题}
 \subsubsection{问题描述}
+学校超市选址问题(带权有向图的中心点)
+设计内容:对于某一学校超市,其他各单位到其的距离不同,同时各单位人员去超市的频度也不同。
+请为超市选址,要求实现总体最优。
+设计要求:
+\begin{enumerate}
+	\item 设计该问题的核心算法;
+	\item 设计可视化的界面,界面中能有效显示学校超市可设立的地点和各单位的位置以及它们之间的有效路径;
+	\item 程序能自动计算出最优设立点,并最好以图示化方式演示。
+\end{enumerate}
 \subsubsection{解决问题所用的算法设计方法及基本思想}
 \subsubsection{采用的数据结构描述}
 \subsubsection{算法描述 }
