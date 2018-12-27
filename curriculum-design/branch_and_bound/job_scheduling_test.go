@@ -9,7 +9,7 @@
 #
 # ====================================================*/
 
-package branchAndBound
+package branchandbound
 
 import (
 	"log"
@@ -17,7 +17,7 @@ import (
 )
 
 func TestNKScheduling(t *testing.T) {
-
-	best := NKScheduling(7, 3, []int{2, 14, 4, 16, 6, 5, 3})
-	log.Println("best:", best)
+	best, result := NKScheduling(7, 3, []int{2, 14, 23, 11, 9, 3, 4, 16, 6, 5, 3})
+	log.Println("最短作业时间为:", best)
+	log.Println("分配情况如下:", result)
 }

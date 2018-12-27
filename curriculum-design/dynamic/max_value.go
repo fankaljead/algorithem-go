@@ -86,6 +86,7 @@ func FindMaxValue2(prices, credits []float64, totalCredit float64) (float64, *[]
 
 	// tracebackMemo(len(prices), int(totalCredit), weights, values, f)
 	tracebackMemo(len(prices), int(totalCredit), &credits, &prices, f, result)
+	//knapsack(len(prices), int(totalCredit), &credits, &prices, f, result)
 
 	for _, v := range *result {
 		maxValue += prices[v]
@@ -113,6 +114,7 @@ func knapsackMemo(i, j int, weights, values *[]float64, f *[][]float64) float64 
 	return (*f)[i][j]
 }
 
+// 回溯
 func tracebackMemo(i, j int, weights, values *[]float64, f *[][]float64, result *[]int) {
 	if i == 0 || j == 0 {
 		return
@@ -135,4 +137,39 @@ func max(a, b float64) float64 {
 		return a
 	}
 	return b
+}
+
+// 迭代填表
+func knapsack(i, j int, weights, values *[]float64, f *[][]float64, result *[]int) float64 {
+	for k := 0; k < len(*f); k++ {
+		temp := new([]float64)
+		for l := 0; l < len((*f)[k]); l++ {
+			*temp = append(*temp, 0)
+		}
+		*f = append(*f, *temp)
+	}
+
+	// 填表
+	for k := 0; k <= i; k++ {
+		for l := 0; l <= j; l++ {
+			if float64(l) >= (*weights)[k-1] {
+				(*f)[k][l] = max((*f)[k-1][l-int((*weights)[k-1])]+(*values)[k-1], (*f)[k-1][l])
+			} else {
+				(*f)[k][l] = (*f)[k-1][l]
+			}
+		}
+
+		lef := j
+		for k := i; k > 0; k-- {
+			temw := lef - int((*weights)[k-1])
+			if temw >= 0 {
+				if (*f)[k-1][temw]+(*values)[k-1] == (*f)[k][lef] {
+					*result = append(*result, k-1)
+					lef = lef - int((*weights)[k-1])
+				}
+			}
+		}
+	}
+
+	return (*f)[i][j]
 }
