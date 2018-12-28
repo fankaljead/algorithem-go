@@ -30,10 +30,19 @@ func TestFindSupermarketLocation(t *testing.T) {
 	*matrix = append(*matrix, p3[:])
 	*matrix = append(*matrix, p4[:])
 
-	log.Println("地址信息如下:", *matrix)
+	*pNumber = append(*pNumber, 20)
+	*pNumber = append(*pNumber, 30)
+	*pNumber = append(*pNumber, 40)
+	*pNumber = append(*pNumber, 25)
+
+	log.Println("地址信息如下:")
+	for _, v := range *matrix {
+		log.Println(v)
+	}
+
 	position, maxLength, path := FindSupermarketLocation(*matrix, *pNumber)
 	log.Println("超市应当建立在:", position)
 	log.Println("超市到各个地方总距离为:", maxLength)
-	log.Println("超市到各个地方总距离为:", path)
+	log.Println("超市路径为:", path)
 
 }

@@ -12,7 +12,7 @@
 package extra
 
 import (
-	"log"
+//"log"
 )
 
 // FindSupermarketLocation 找到超市位置
@@ -36,9 +36,14 @@ func FindSupermarketLocation(matrix [][]int, pNumber []int) (position, length in
 	}
 
 	matrixS, resultMap := findShortest(matrix)
-
-	log.Println(matrixS)
-	log.Println(resultMap)
+	length = 99999999
+	for i := 0; i < len(*matrixS); i++ {
+		if length > sum(&(*matrixS)[i]) {
+			length = sum(&(*matrixS)[i])
+			position = i
+		}
+	}
+	path = (*resultMap)[position]
 	return
 }
 
@@ -56,23 +61,45 @@ func findShortest(matrix [][]int) (matrixS *[][]int, pPath *map[int][][]int) {
 		*matrixS = append(*matrixS, *tP)
 	}
 
+	// 初始化 path
+	for i := 0; i < len(matrix); i++ {
+		temp := new([][]int)
+		for j := 0; j < len(matrix); j++ {
+			tempL := new([]int)
+			*tempL = append(*tempL, i)
+			*tempL = append(*tempL, j)
+			*temp = append(*temp, *tempL)
+		}
+		path[i] = *temp
+	}
+
 	// 找出最短路径
 	for k := 0; k < len(*matrixS); k++ {
-		kA := new([][]int)
 		for i := 0; i < len(*matrixS); i++ {
-			kTi := new([]int)
 			for j := 0; j < len(*matrixS); j++ {
 				minP, po := min((*matrixS)[i][j], (*matrixS)[i][k]+(*matrixS)[k][j])
 				(*matrixS)[i][j] = minP
-				if po == 1 {
-					*kTi = append(*kTi, j)
-				} else {
-					*kTi = append(*kTi, k)
+				if po != 1 {
+					temp := make([]int, 0)
+					for _, v := range path[i][j] {
+						temp = append(temp, v)
+					}
+					path[i][j] = make([]int, 0)
+					path[i][j] = append(path[i][j], k)
+					for _, v := range temp {
+						path[i][j] = append(path[i][j], v)
+					}
+					if len(path[i][j]) > 2 {
+						//last := path[i][j][len(path[i][j])-1]
+						path[i][j][0], path[i][j][1] = path[i][j][1], path[i][j][0]
+						//for l := len(path[i][j]) - 1; l > 0; l-- {
+						//path[i][j][l] = path[i][j][l-1]
+						//}
+						//path[i][j][0] = last
+					}
 				}
 			}
-			*kA = append(*kA, *kTi)
 		}
-		path[k] = *kA
 	}
 	pPath = &path
 
@@ -89,4 +116,12 @@ func min(a, b int) (int, int) {
 func findShortestPath(i, j int, matrix [][]int) *[]int {
 	path := new([]int)
 	return path
+}
+
+func sum(a *[]int) int {
+	sum := 0
+	for _, v := range *a {
+		sum += v
+	}
+	return sum
 }
