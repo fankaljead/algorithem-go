@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/Arch Linux) (preloaded format=xelatex 2018.12.3)  27 DEC 2018 15:19
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/Arch Linux) (preloaded format=xelatex 2018.12.3)  1 JAN 2019 15:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -909,10 +909,16 @@ File: ../images/iteration.png Graphic file (type bmp)
 <../images/iteration.png>
  [3]
 Missing character: There is no ， in font [lmroman10-regular]:mapping=tex-text;!
+ (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2018/09/02 1.7 listings language file
+)
+(/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
+)
 File: ../images/binomial-test.png Graphic file (type bmp)
 <../images/binomial-test.png>
 
-Overfull \hbox (59.22003pt too wide) in paragraph at lines 214--215
+Overfull \hbox (59.22003pt too wide) in paragraph at lines 221--222
  [][] 
  []
 
@@ -920,25 +926,20 @@ Overfull \hbox (59.22003pt too wide) in paragraph at lines 214--215
 File: ../images/demo-tree.png Graphic file (type bmp)
 <../images/demo-tree.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 237--248
+Underfull \hbox (badness 10000) in paragraph at lines 244--255
 
  []
 
 [5]
 File: ../images/trree.png Graphic file (type bmp)
 <../images/trree.png>
- [6] [7] (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2018/09/02 1.7 listings language file
-)
-(/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
-)
+ [6] [7]
 File: ../images/eight_pints_result_demo.png Graphic file (type bmp)
 <../images/eight_pints_result_demo.png>
  [8]
 Missing character: There is no 。 in font [lmroman10-regular]:mapping=tex-text;!
  [9] [10]
-Overfull \hbox (33.85771pt too wide) in paragraph at lines 373--375
+Overfull \hbox (33.85771pt too wide) in paragraph at lines 380--382
 []\TU/NSimSun(0)/m/n/10.53937 如 果 一 个 子 序 列 从 左 向 右 和 从 右 向 左 读 都 一 样\TU/lmr/m/
 n/10.53937 , \TU/NSimSun(0)/m/n/10.53937 则 称 之 为 回 文。|  例 如\TU/lmr/m/n/10.53937
  , \TU/NSimSun(0)/m/n/10.53937 序 列 $\OML/cmm/m/it/10.53937 ACGTGTCAAAATCG$
@@ -950,13 +951,29 @@ File: ../images/max_huiwen.png Graphic file (type bmp)
  [12] [13]
 File: ../images/xiaomei_max_value.png Graphic file (type bmp)
 <../images/xiaomei_max_value.png>
- [14] [15]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 499.
+ [14]
+Underfull \hbox (badness 10000) in paragraph at lines 486--503
+
+ []
+
+[15]
+File: ../images/branch_and_output.png Graphic file (type bmp)
+<../images/branch_and_output.png>
  [16]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 499.
+Underfull \hbox (badness 10000) in paragraph at lines 540--555
+
+ []
+
+[17]
+File: ../images/find_shortest_path.png Graphic file (type bmp)
+<../images/find_shortest_path.png>
+ [18]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 570.
+ [19]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 570.
  (./curriculum_design.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 499.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 499.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 570.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 570.
 Package rerunfilecheck Info: File `curriculum_design.out' has not changed.
 (rerunfilecheck)             Checksum: 0CBBA3C2D14A939179B94FAC1703B047.
 
@@ -964,15 +981,15 @@ Package rerunfilecheck Info: File `curriculum_design.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.78749pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 499.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 570.
  ) 
 Here is how much of TeX's memory you used:
- 26313 strings out of 492956
- 521210 string characters out of 6139024
- 898337 words of memory out of 5000000
- 30085 multiletter control sequences out of 15000+600000
- 539177 words of font info for 76 fonts, out of 8000000 for 9000
+ 26365 strings out of 492956
+ 522366 string characters out of 6139024
+ 897561 words of memory out of 5000000
+ 30132 multiletter control sequences out of 15000+600000
+ 539193 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 52i,12n,65p,806b,1177s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 52i,12n,65p,806b,1113s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on curriculum_design.pdf (19 pages).
+Output written on curriculum_design.pdf (22 pages).

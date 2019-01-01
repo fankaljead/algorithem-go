@@ -170,7 +170,7 @@
 	\tab// 计算二项式公式 使用迭代方法 \\
 	\tab// 输入：二项式公式的 $k, n$ \\
 	\tab// 输出：二项式公式的值 \\
-	kns array[][] \\
+	kns $\leftarrow$ array\
 	{\bfseries for} $i = 0$ to n \\
 	\tab {\bfseries for } $j = 0$ to $k$ \\
 	\tab {\bfseries if} $i < j$ \\
@@ -203,9 +203,16 @@
 	\caption{迭代算法}
 \end{figure}
 
-通过分析，可以得出{\bfseries 递归算法}的时间复杂度 $\Theta(n) = n^2$，空间复杂度为 $O(1)$ ；{\bfseries 备忘录方法}的时间复杂度 $\Theta(n) = n^2，$空间复杂度为 $O(n)$ ；{\bfseries 迭代算法}的时间复杂度 $\Theta(n) = n^2$，空间复杂度为 $O(n^2)$ 。
+通过分析，可以得出{\bfseries 递归算法}的时间复杂度 $\Theta(n) = n^2$，空间复杂
+度为 $O(1)$ ；{\bfseries 备忘录方法}的时间复杂度 $\Theta(n) = n^2，
+$空间复杂度为 $O(n)$ ；{\bfseries 迭代算法}的时间复杂度 $\Theta(n) = n^2$，
+空间复杂度为 $O(n^2)$ 。
 \subsubsection{算法实例}
-输入：$n=16, k=7$ 
+输入：
+\begin{lstlisting}[language=C]
+n=16
+k=7
+\end{lstlisting}
 
 输出:
 
@@ -247,7 +254,7 @@
 	\tab ddraw($x_3,y_3,randomLength_3,randomAngle_3$) // 画右边子节点 \\
 
 \subsubsection{算法的时间空间复杂度分析 }
-假定树的深度为 $n$ ，那么此算法的时间复杂度为 $\Theta(n) = 2^n$，空间辅助度也为 $2^n$ 。 
+假定树的深度为 $n$ ，那么此算法的时间复杂度为 $\Theta(n) = 2^n$，空间复杂度也为 $2^n$ 。 
 \subsubsection{算法实例}
 下面是一个随机生成的分形树的实例：
 \begin{figure}[H]
@@ -397,7 +404,7 @@
 	\tab result $\leftarrow$ findLongestSubString(longestLength,resultMap,chars) \\
 	\tab{\bfseries return} result
 \subsubsection{算法的时间空间复杂度分析 }
-首先需要一个外层字符串的遍历，然后是寻找最长的回文子序列，其时间辅助度为
+首先需要一个外层字符串的遍历，然后是寻找最长的回文子序列，其时间复杂度为
 $\Theta(n) = n^3$，空间复杂度为 $n^2$。
 \subsubsection{算法实例}
 下面是实验测试过程中的一些输入输出:
@@ -470,16 +477,52 @@ n个任务的最佳调度,使得完成全部任务的时间最早。
 17
 \end{lstlisting}
 \subsubsection{解决问题所用的算法设计方法及基本思想}
+此问题采用的方法是分支限界，先然一个处理机处理所以任务，然后从这个处理机中
+分出一个任务分给其它的处理机，这样一次一次的分配，直到三个处理机中最大的为所有情况中
+最小时，返回，并且在此过程中记录每一次每个处理机中的处理情况。
 \subsubsection{采用的数据结构描述}
+使用一个二维数组来保存每个处理机处理任务的信息。
 \subsubsection{算法描述 }
+   {\bfseries 处理机调度} \\
+   \tab{\bfseries{算法 nkSchedeling (dep, lens, t, n, k, result) }} \\
+	\tab// 找出价值最大的商品集合 \\
+	\tab// 输入：dep, lens, t, n, k, result\\
+	\tab// 输出：result 包含处理机调度的数组 \\
+	\tab{\bfseries if} dep = n {\bfseries do} \\
+	\tab\tab tmp $\leftarrow$ comp(lens) // 找到一次中的最大时间\\
+	\tab\tab{\bfseries if} tmp $<$ bestSoFar \\
+	\tab\tab\tab bestSoFar = tmp\\
+	\tab\tab{\bfseries return}\\
+	\tab{\bfseries for} $i \leftarrow 0$ {\bfseries to} $k$ {\bfseries do} \\
+	\tab\tab lens[i] += t[dep]\\
+	\tab\tab result[dep] = i\\
+	\tab\tab{\bfseries if} $lens[i] < bestSoFar$ {\bfseries do} \\
+	\tab\tab\tab nkSchedeling(dep+1, lens, t, n, k, result) \\
+	\tab\tab lens[i] -= t[dep]\\
+	\tab\tab delete(result[dep])\\
 \subsubsection{算法的时间空间复杂度分析 }
+时间复杂度 $\Theta(n) = n^k$，空间复杂度为 $n^2$
 \subsubsection{算法实例}
+输入：
+\begin{lstlisting}[language=C]
+处理机个数：n = 3
+任务个数：k = 7
+每个任务所花时间：t = {2, 14, 23, 11, 9, 3, 4, 16, 6, 5, 3}
+\end{lstlisting}
+
+输出:
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{../images/branch_and_output.png}
+	\caption{处理机调度}
+\end{figure}
+
 
 \newpage
 \section{附加题目}
 \subsection{学习超市选址问题}
 \subsubsection{问题描述}
-学校超市选址问题(带权有向图的中心点)
+学校超市选址问题 (带权有向图的中心点)
 设计内容:对于某一学校超市,其他各单位到其的距离不同,同时各单位人员去超市的频度也不同。
 请为超市选址,要求实现总体最优。
 设计要求:
@@ -489,11 +532,39 @@ n个任务的最佳调度,使得完成全部任务的时间最早。
 	\item 程序能自动计算出最优设立点,并最好以图示化方式演示。
 \end{enumerate}
 \subsubsection{解决问题所用的算法设计方法及基本思想}
+本题目采用Floyd最短路径算法，把每个点到其它点的距离全部算出来，然后
+比较，选出距离最短的点。
 \subsubsection{采用的数据结构描述}
+使用二维矩阵来保存点与点之间的距离。
 \subsubsection{算法描述 }
+   {\bfseries 找出带权有向图的中心点} \\
+   \tab{\bfseries{算法 findShortest (maxtrix) }} \\
+	\tab// 找出带权有向图的中心点\\
+	\tab// 输入：一个二维数组表示每个点之间的距离\\
+	\tab// 输出：maxtrixS表示最终的点与点之间的最终距离\\
+	\tab// 输出：pPath表示最终距离到最终距离的路径\\
+	\tab maxtrixS $\leftarrow$ matrix\\
+	\tab pPath $\leftarrow$ new array\\
+	\tab{\bfseries for} $k \leftarrow 0$ to len(matrix) {\bfseries do} \\
+	\tab\tab{\bfseries for} $i \leftarrow 0$ to len(matrix) {\bfseries do} \\
+	\tab\tab\tab{\bfseries for} $j \leftarrow 0$ to len(matrix) {\bfseries do} \\
+	\tab\tab\tab\tab min,po $\leftarrow$ min(maxtrixS[i,j],maxtrixS[i,k]+maxtrixS[k,j])\\
+	\tab\tab\tab\tab maxtrixS[i,j] $\leftarrow$ minP\\
+	\tab\tab\tab\tab append(path[i,j], k)\\
+	\tab{\bfseries return} maxtrix, pPath\\
 \subsubsection{算法的时间空间复杂度分析 }
+本题的时间复杂度为 $\Theta(n) = n^3$，空间复杂度为 $n^3$。
 \subsubsection{算法实例}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{../images/find_shortest_path.png}
+	\caption{超市选址实例}
+\end{figure}
 
+\newpage
 \section{课程设计总结}
+本次的算法课程设计让我更加深刻的理解的一些基本的算法思想，包括蛮力法、分支限界、
+回溯法、动态规划等。在每完成一道算法题时，都会对该算法思想具有更深刻的认识和体会，
+即使有些比较困难，但最终都会得到很大的收获。
 
 \end{document}
