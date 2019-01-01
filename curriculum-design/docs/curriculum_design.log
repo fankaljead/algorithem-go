@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/Arch Linux) (preloaded format=xelatex 2018.12.3)  1 JAN 2019 19:21
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/Arch Linux) (preloaded format=xelatex 2018.12.3)  1 JAN 2019 21:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -968,12 +968,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 541--556
 File: ../images/find_shortest_path.png Graphic file (type bmp)
 <../images/find_shortest_path.png>
  [18]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 571.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 577.
  [19]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 571.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 577.
  (./curriculum_design.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 571.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 571.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 577.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 577.
 Package rerunfilecheck Info: File `curriculum_design.out' has not changed.
 (rerunfilecheck)             Checksum: 0CBBA3C2D14A939179B94FAC1703B047.
 
@@ -981,7 +981,7 @@ Package rerunfilecheck Info: File `curriculum_design.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.78749pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 571.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 577.
  ) 
 Here is how much of TeX's memory you used:
  26365 strings out of 492956
